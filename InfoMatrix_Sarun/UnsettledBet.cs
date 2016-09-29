@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InfoMatrix_Sarun
+﻿namespace InfoMatrix_Sarun
 {
     /// <summary>
     /// Class used for holding Unsettled Bet - data extracted from CSV file

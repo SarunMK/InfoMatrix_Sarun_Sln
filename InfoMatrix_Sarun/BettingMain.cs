@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace InfoMatrix_Sarun
@@ -20,22 +17,60 @@ namespace InfoMatrix_Sarun
         List<Combined> listCombined = null;
         string[] lines = null;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BettingMain()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Form Load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BettingMain_Load(object sender, EventArgs e)
         {
             //Display Settled Bet information 
-            SettledBet();
-            UnsettledBet();
+            DisplaySettledBet();
+            DisplayUnsettledBet();
         }
 
         /// <summary>
         /// Display Settled Bet Information on the UI
         /// </summary>
-        private void SettledBet()
+        private void DisplaySettledBet()
+        {
+            //Bind grid
+            dgvSettledBet.DataSource = GetSettledBetCustomerList();
+        }
+
+        /// <summary>
+        /// Display Unsettled Bet Information on the UI
+        /// </summary>
+        private void DisplayUnsettledBet()
+        {
+            GetCombinedCustomerList();
+
+            //Bind grids
+            dgvUnsettledBetHighRisk.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHighRisk));
+            dgvUnsettledBetUnusual.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHigher10Stake));
+            dgvUnsettledBetHighlyUnusual.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHigher30Stake));
+            dgvUnsettledBet1000Plus.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsAmount1000Plus));
+
+            //Format grids
+            FormatUnsettledBetHighRiskGrid();
+            FormatUnsettledBetUnusualGrid();
+            FormatUnsettledBetHighlyUnusualGrid();
+            FormatUnsettledBet1000PlusGrid();
+        }
+
+        /// <summary>
+        /// Get List of Customers for Settled bet
+        /// </summary>
+        /// <returns></returns>
+        public List<Customer> GetSettledBetCustomerList()
         {
             //Get string array from the file
             lines = GetStringArrayFromFile("Settled.csv");
@@ -52,7 +87,7 @@ namespace InfoMatrix_Sarun
                                       Win = Convert.ToInt32(data[4]),
                                   }).ToList();
 
-            
+
             //Group all information based on customer
             listSettledCustomer = (from bet in listAllSettledData
                                    group bet by bet.Customer into groupBet
@@ -74,49 +109,49 @@ namespace InfoMatrix_Sarun
                     item.IsUnusualWin = true;
             }
 
-            //Bind grid
-            dgvSettledBet.DataSource = listSettledCustomer;
+            return listSettledCustomer;
         }
-
+        
         /// <summary>
-        /// Display Unsettled Bet Information on the UI
+        /// Get List of Settled and Unsettled customers bet information
         /// </summary>
-        private void UnsettledBet()
+        /// <returns></returns>
+        public List<Combined> GetCombinedCustomerList()
         {
             //Get string array from the file
             lines = GetStringArrayFromFile("Unsettled.csv");
 
             //Retrieve all information from the file
             listAllUnsettledData = (from csvline in lines
-                                                   let data = csvline.Split(',')
-                                                   select new UnsettledBet()
-                                                   {
-                                                       Customer = Convert.ToInt32(data[0]),
-                                                       Event = Convert.ToInt32(data[1]),
-                                                       Participant = Convert.ToInt32(data[2]),
-                                                       Stake = Convert.ToInt32(data[3]),
-                                                       ToWin = Convert.ToInt32(data[4]),
-                                                   }).ToList();
+                                    let data = csvline.Split(',')
+                                    select new UnsettledBet()
+                                    {
+                                        Customer = Convert.ToInt32(data[0]),
+                                        Event = Convert.ToInt32(data[1]),
+                                        Participant = Convert.ToInt32(data[2]),
+                                        Stake = Convert.ToInt32(data[3]),
+                                        ToWin = Convert.ToInt32(data[4]),
+                                    }).ToList();
 
 
             //Join All Unsettled Data with Settled Customer Data using CustomerId
             listCombined = (from bet in listAllUnsettledData
-                                join listCustSet in listSettledCustomer
-                                on bet.Customer equals listCustSet.CustomerId
-                                select new Combined
-                                {
-                                    CustomerId = listCustSet.CustomerId,
-                                    WinCount = listCustSet.WinCount,
-                                    TotalBetCount = listCustSet.TotalBetCount,
-                                    CustomerName = listCustSet.CustomerName,
-                                    IsUnusualWin = listCustSet.IsUnusualWin,
-                                    AverageBet = listCustSet.AverageBet,
-                                    AverageStake = listCustSet.AverageStake,
-                                    UnsettledEvent = bet.Event,
-                                    UnsettledParticipant = bet.Participant,
-                                    UnsettledStake = bet.Stake,
-                                    UnsettledWin = bet.ToWin,
-                                }).ToList();
+                            join listCustSet in listSettledCustomer
+                            on bet.Customer equals listCustSet.CustomerId
+                            select new Combined
+                            {
+                                CustomerId = listCustSet.CustomerId,
+                                WinCount = listCustSet.WinCount,
+                                TotalBetCount = listCustSet.TotalBetCount,
+                                CustomerName = listCustSet.CustomerName,
+                                IsUnusualWin = listCustSet.IsUnusualWin,
+                                AverageBet = listCustSet.AverageBet,
+                                AverageStake = listCustSet.AverageStake,
+                                UnsettledEvent = bet.Event,
+                                UnsettledParticipant = bet.Participant,
+                                UnsettledStake = bet.Stake,
+                                UnsettledWin = bet.ToWin,
+                            }).ToList();
 
             //Update list with Unusual win information
             //Set the boolean property to true if the customer wins more than 60% of the total bets
@@ -128,21 +163,11 @@ namespace InfoMatrix_Sarun
                     item.UnsettledIsHigher10Stake = true;
                 if (item.UnsettledStake > (item.AverageBet * 30))
                     item.UnsettledIsHigher30Stake = true;
-                if (item.UnsettledWin > 1000)
+                if (item.UnsettledWin >= 1000)
                     item.UnsettledIsAmount1000Plus = true;
             }
 
-            //Bind grids
-            dgvUnsettledBetHighRisk.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHighRisk));
-            dgvUnsettledBetUnusual.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHigher10Stake));
-            dgvUnsettledBetHighlyUnusual.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHigher30Stake));
-            dgvUnsettledBet1000Plus.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsAmount1000Plus));
-
-            //Format grids
-            FormatUnsettledBetHighRiskGrid();
-            FormatUnsettledBetUnusualGrid();
-            FormatUnsettledBetHighlyUnusualGrid();
-            FormatUnsettledBet1000PlusGrid();
+            return listCombined;
         }
 
         /// <summary>
