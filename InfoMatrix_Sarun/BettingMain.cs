@@ -20,7 +20,7 @@ namespace InfoMatrix_Sarun
 
         private void BettingMain_Load(object sender, EventArgs e)
         {
-            string csvSettledFile = @"D:\Technical\Practical\DotNet\InfoMatrix_Sarun\InfoMatrix_Sarun\Settled.csv";
+            string csvSettledFile = Directory.GetCurrentDirectory() + "\\Settled.csv";
             string[] lines = File.ReadAllLines(csvSettledFile);
 
             var allSettledData = from csvline in lines
