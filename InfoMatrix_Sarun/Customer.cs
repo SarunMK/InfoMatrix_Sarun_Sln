@@ -36,5 +36,7 @@ namespace InfoMatrix_Sarun
         /// Default is set to false
         /// </summary>
         public bool IsUnusualWin { get; set; }
+        public double AverageBet { get; set; }
+        public double AverageStake { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace InfoMatrix_Sarun
         public int WinCount { get; set; }
         public int TotalBetCount { get; set; }
         public bool IsUnusualWin { get; set; }
+        public double AverageBet { get; set; }
+        public double AverageStake { get; set; }
         public int UnsettledEvent { get; set; }
         public int UnsettledParticipant { get; set; }
         public int UnsettledStake { get; set; }

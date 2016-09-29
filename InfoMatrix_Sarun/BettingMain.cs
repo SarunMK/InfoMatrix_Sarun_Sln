@@ -13,7 +13,13 @@ namespace InfoMatrix_Sarun
 {
     public partial class BettingMain : Form
     {
+        //Variables
+        List<SettledBet> listAllSettledData = null;
+        List<UnsettledBet> listAllUnsettledData = null;
         List<Customer> listSettledCustomer = null;
+        List<Combined> listCombined = null;
+        string[] lines = null;
+
         public BettingMain()
         {
             InitializeComponent();
@@ -31,12 +37,11 @@ namespace InfoMatrix_Sarun
         /// </summary>
         private void SettledBet()
         {
-            //Get and read data from the CSV file
-            string csvSettledFile = Directory.GetCurrentDirectory() + "\\Settled.csv";
-            string[] lines = File.ReadAllLines(csvSettledFile);
+            //Get string array from the file
+            lines = GetStringArrayFromFile("Settled.csv");
 
             //Retrieve all information from the file
-            List<SettledBet> listAllSettledData = (from csvline in lines
+            listAllSettledData = (from csvline in lines
                                   let data = csvline.Split(',')
                                   select new SettledBet()
                                   {
@@ -57,6 +62,7 @@ namespace InfoMatrix_Sarun
                                        WinCount = groupBet.Count(t => t.Win > 0),
                                        TotalBetCount = groupBet.Count(t => t.Win >= 0),
                                        CustomerName = "Customer_" + groupBet.Key.ToString(),
+                                       AverageBet = groupBet.Average(t => t.Stake)
                                    }).ToList();
 
             //Update list with Unusual win information
@@ -74,24 +80,24 @@ namespace InfoMatrix_Sarun
 
         private void UnsettledBet()
         {
-            //Get and read data from the CSV file
-            string csvSettledFile = Directory.GetCurrentDirectory() + "\\Unsettled.csv";
-            string[] lines = File.ReadAllLines(csvSettledFile);
+            //Get string array from the file
+            lines = GetStringArrayFromFile("Unsettled.csv");
 
             //Retrieve all information from the file
-            List<SettledBet> listAllUnsettledData = (from csvline in lines
+            listAllUnsettledData = (from csvline in lines
                                                    let data = csvline.Split(',')
-                                                   select new SettledBet()
+                                                   select new UnsettledBet()
                                                    {
                                                        Customer = Convert.ToInt32(data[0]),
                                                        Event = Convert.ToInt32(data[1]),
                                                        Participant = Convert.ToInt32(data[2]),
                                                        Stake = Convert.ToInt32(data[3]),
-                                                       Win = Convert.ToInt32(data[4]),
+                                                       ToWin = Convert.ToInt32(data[4]),
                                                    }).ToList();
 
 
-            List<Combined> listCombined = (from bet in listAllUnsettledData
+            //Join All Unsettled Data with Settled Customer Data using CustomerId
+            listCombined = (from bet in listAllUnsettledData
                                 join listCustSet in listSettledCustomer
                                 on bet.Customer equals listCustSet.CustomerId
                                 select new Combined
@@ -101,14 +107,38 @@ namespace InfoMatrix_Sarun
                                     TotalBetCount = listCustSet.TotalBetCount,
                                     CustomerName = listCustSet.CustomerName,
                                     IsUnusualWin = listCustSet.IsUnusualWin,
+                                    AverageBet = listCustSet.AverageBet,
+                                    AverageStake = listCustSet.AverageStake,
                                     UnsettledEvent = bet.Event,
                                     UnsettledParticipant = bet.Participant,
                                     UnsettledStake = bet.Stake,
-                                    UnsettledWin = bet.Win,
+                                    UnsettledWin = bet.ToWin,
                                 }).ToList();
 
-
+            foreach (var item in listCombined)
+            {
+                if (item.IsUnusualWin)
+                    item.UnsettledIsHighRisk = true;
+                if (item.UnsettledStake > (item.AverageBet * 10))
+                    item.UnsettledIsHigher10Stake = true;
+                if (item.UnsettledStake > (item.AverageBet * 30))
+                    item.UnsettledIsHigher30Stake = true;
+                if (item.UnsettledWin > 1000)
+                    item.UnsettledIsAmount1000Plus = true;
+            }
             dgvUnsettledBet.DataSource = listCombined;
+        }
+
+        /// <summary>
+        /// Read data from CSV file
+        /// </summary>
+        /// <param name="fileName">Provide SVC file name</param>
+        /// <returns>Returns string array</returns>
+        private string[] GetStringArrayFromFile(string fileName)
+        {
+            //Get and read data from the CSV file
+            string csvSettledFile = Directory.GetCurrentDirectory() + "\\" + fileName;
+            return File.ReadAllLines(csvSettledFile);
         }
 
         /// <summary>

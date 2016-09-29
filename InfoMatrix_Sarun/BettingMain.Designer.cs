@@ -60,14 +60,14 @@
             this.dgvUnsettledBet.Location = new System.Drawing.Point(128, 282);
             this.dgvUnsettledBet.Name = "dgvUnsettledBet";
             this.dgvUnsettledBet.RowTemplate.Height = 24;
-            this.dgvUnsettledBet.Size = new System.Drawing.Size(863, 414);
+            this.dgvUnsettledBet.Size = new System.Drawing.Size(1259, 414);
             this.dgvUnsettledBet.TabIndex = 2;
             // 
             // BettingMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1087, 728);
+            this.ClientSize = new System.Drawing.Size(1412, 728);
             this.Controls.Add(this.dgvUnsettledBet);
             this.Controls.Add(this.lblSettledBet);
             this.Controls.Add(this.dgvSettledBet);
