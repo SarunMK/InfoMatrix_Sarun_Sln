@@ -38,7 +38,7 @@
             this.dgvSettledBet.Location = new System.Drawing.Point(128, 109);
             this.dgvSettledBet.Name = "dgvSettledBet";
             this.dgvSettledBet.RowTemplate.Height = 24;
-            this.dgvSettledBet.Size = new System.Drawing.Size(633, 150);
+            this.dgvSettledBet.Size = new System.Drawing.Size(820, 150);
             this.dgvSettledBet.TabIndex = 0;
             // 
             // BettingMain

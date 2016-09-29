@@ -48,24 +48,15 @@ namespace InfoMatrix_Sarun
 
             List<Customer> listSettledCustomer = groupSettledBet.ToList();
 
+            foreach (var item in listSettledCustomer)
+            {
+                decimal decAvg = (Convert.ToDecimal(item.WinCount) / Convert.ToDecimal(item.TotalBetCount)) * 100;
+                if (decAvg > 60)
+                    item.IsUnusualWin = true;
+            }
+
             dgvSettledBet.DataSource = listSettledCustomer;
         }
     }
 
-    public class SettledBet
-    {
-        public int Customer { get; set; }
-        public int Event { get; set; }
-        public int Participant { get; set; }
-        public int Stake { get; set; }
-        public int Win { get; set; }
-    }
-
-    public class Customer
-    {
-        public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
-        public int WinCount { get; set; }
-        public int TotalBetCount { get; set; }
-    }
 }
