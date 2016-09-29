@@ -78,6 +78,9 @@ namespace InfoMatrix_Sarun
             dgvSettledBet.DataSource = listSettledCustomer;
         }
 
+        /// <summary>
+        /// Display Unsettled Bet Information on the UI
+        /// </summary>
         private void UnsettledBet()
         {
             //Get string array from the file
@@ -115,6 +118,8 @@ namespace InfoMatrix_Sarun
                                     UnsettledWin = bet.ToWin,
                                 }).ToList();
 
+            //Update list with Unusual win information
+            //Set the boolean property to true if the customer wins more than 60% of the total bets
             foreach (var item in listCombined)
             {
                 if (item.IsUnusualWin)
@@ -126,7 +131,95 @@ namespace InfoMatrix_Sarun
                 if (item.UnsettledWin > 1000)
                     item.UnsettledIsAmount1000Plus = true;
             }
-            dgvUnsettledBet.DataSource = listCombined;
+
+            //Bind grids
+            dgvUnsettledBetHighRisk.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHighRisk));
+            dgvUnsettledBetUnusual.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHigher10Stake));
+            dgvUnsettledBetHighlyUnusual.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsHigher30Stake));
+            dgvUnsettledBet1000Plus.DataSource = new List<Combined>(listCombined.Where(x => x.UnsettledIsAmount1000Plus));
+
+            //Format grids
+            FormatUnsettledBetHighRiskGrid();
+            FormatUnsettledBetUnusualGrid();
+            FormatUnsettledBetHighlyUnusualGrid();
+            FormatUnsettledBet1000PlusGrid();
+        }
+
+        /// <summary>
+        /// Format grid of high risk customers
+        /// </summary>
+        private void FormatUnsettledBetHighRiskGrid()
+        {
+            dgvUnsettledBetHighRisk.ClearSelection();
+            dgvUnsettledBetHighRisk.ReadOnly = true;
+            dgvUnsettledBetHighRisk.Columns["WinCount"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["TotalBetCount"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["IsUnusualWin"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["AverageBet"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["AverageStake"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["UnsettledIsHighRisk"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["UnsettledIsHigher10Stake"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["UnsettledIsHigher30Stake"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["UnsettledIsAmount1000Plus"].Visible = false;
+            dgvUnsettledBetHighRisk.Columns["CustomerName"].Width = 120;
+
+        }
+        
+        /// <summary>
+        /// Format grid with unusual bets
+        /// </summary>
+        private void FormatUnsettledBetUnusualGrid()
+        {
+            dgvUnsettledBetUnusual.ClearSelection();
+            dgvUnsettledBetUnusual.ReadOnly = true;
+            dgvUnsettledBetUnusual.Columns["WinCount"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["TotalBetCount"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["IsUnusualWin"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["AverageBet"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["AverageStake"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["UnsettledIsHighRisk"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["UnsettledIsHigher10Stake"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["UnsettledIsHigher30Stake"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["UnsettledIsAmount1000Plus"].Visible = false;
+            dgvUnsettledBetUnusual.Columns["CustomerName"].Width = 120;
+        }
+
+        /// <summary>
+        /// Format grid with high risk bets
+        /// </summary>
+        private void FormatUnsettledBetHighlyUnusualGrid()
+        {
+            dgvUnsettledBetHighlyUnusual.ClearSelection();
+            dgvUnsettledBetHighlyUnusual.ReadOnly = true;
+            dgvUnsettledBetHighlyUnusual.Columns["WinCount"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["TotalBetCount"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["IsUnusualWin"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["AverageBet"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["AverageStake"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["UnsettledIsHighRisk"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["UnsettledIsHigher10Stake"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["UnsettledIsHigher30Stake"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["UnsettledIsAmount1000Plus"].Visible = false;
+            dgvUnsettledBetHighlyUnusual.Columns["CustomerName"].Width = 120;
+        }
+
+        /// <summary>
+        /// Format grid with 1000 dollar plus bets
+        /// </summary>
+        private void FormatUnsettledBet1000PlusGrid()
+        {
+            dgvUnsettledBet1000Plus.ClearSelection();
+            dgvUnsettledBet1000Plus.ReadOnly = true;
+            dgvUnsettledBet1000Plus.Columns["WinCount"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["TotalBetCount"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["IsUnusualWin"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["AverageBet"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["AverageStake"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["UnsettledIsHighRisk"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["UnsettledIsHigher10Stake"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["UnsettledIsHigher30Stake"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["UnsettledIsAmount1000Plus"].Visible = false;
+            dgvUnsettledBet1000Plus.Columns["CustomerName"].Width = 120;
         }
 
         /// <summary>
@@ -154,6 +247,8 @@ namespace InfoMatrix_Sarun
             dgvSettledBet.Columns["IsUnusualWin"].Visible = false;
             dgvSettledBet.Columns["WinCount"].Visible = false;
             dgvSettledBet.Columns["TotalBetCount"].Visible = false;
+            dgvSettledBet.Columns["AverageBet"].Visible = false;
+            dgvSettledBet.Columns["AverageStake"].Visible = false;
             dgvSettledBet.Columns["CustomerId"].Width = 100;
             dgvSettledBet.Columns["CustomerName"].Width = 200;
             foreach (DataGridViewRow row in dgvSettledBet.Rows)

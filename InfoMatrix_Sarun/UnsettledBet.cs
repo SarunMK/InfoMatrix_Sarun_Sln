@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace InfoMatrix_Sarun
 {
+    /// <summary>
+    /// Class used for holding Unsettled Bet - data extracted from CSV file
+    /// </summary>
     public class UnsettledBet
     {
         /// <summary>
