@@ -20,6 +20,7 @@ namespace InfoMatrix_Sarun
         private void BettingMain_Load(object sender, EventArgs e)
         {
 
+
         }
     }
 }
