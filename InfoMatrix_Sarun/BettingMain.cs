@@ -36,7 +36,19 @@ namespace InfoMatrix_Sarun
 
             List<SettledBet> listAllSettledData = allSettledData.ToList();
 
-            dgvSettledBet.DataSource = listAllSettledData;
+            var groupSettledBet = from bet in listAllSettledData
+                                  group bet by bet.Customer into groupBet
+                                  select new Customer
+                                  {
+                                      CustomerId = groupBet.Key,
+                                      WinCount = groupBet.Count(t => t.Win > 0),
+                                      TotalBetCount = groupBet.Count(t => t.Win >= 0),
+                                      CustomerName = "Customer_" + groupBet.Key.ToString(),
+                                  };
+
+            List<Customer> listSettledCustomer = groupSettledBet.ToList();
+
+            dgvSettledBet.DataSource = listSettledCustomer;
         }
     }
 
@@ -49,5 +61,11 @@ namespace InfoMatrix_Sarun
         public int Win { get; set; }
     }
 
-
+    public class Customer
+    {
+        public int CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public int WinCount { get; set; }
+        public int TotalBetCount { get; set; }
+    }
 }
