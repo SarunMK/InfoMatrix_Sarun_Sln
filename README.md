@@ -6,7 +6,7 @@ The solution contains the following:
 2.  A UnitTest Application using NUnit Framework, for unit testing the application.
 Since I was free to use any approach, I went with simple Windows application. I can even do well with using Webforms or MVC. 
 Also there are multiple ways of doing this. Either using color code in a single resultset/grid and give a legend what each color refers to; 
-or multiple grids for each result. 
+or multiple grids for each result. For unit testing also, I have included only three test methods now.
 
 Steps to run the applications:
 1.  Download the Zip file "InfoMatrix_Sarun_Sln-master.zip".
