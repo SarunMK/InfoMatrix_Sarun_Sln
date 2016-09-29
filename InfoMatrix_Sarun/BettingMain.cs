@@ -22,6 +22,7 @@ namespace InfoMatrix_Sarun
         {
             //Display Settled Bet information 
             SettledBet();
+            UnsettledBet();
         }
 
         /// <summary>
@@ -68,6 +69,28 @@ namespace InfoMatrix_Sarun
 
             //Bind grid
             dgvSettledBet.DataSource = listSettledCustomer;
+        }
+
+        private void UnsettledBet()
+        {
+            //Get and read data from the CSV file
+            string csvSettledFile = Directory.GetCurrentDirectory() + "\\Unsettled.csv";
+            string[] lines = File.ReadAllLines(csvSettledFile);
+
+            //Retrieve all information from the file
+            List<SettledBet> listAllUnsettledData = (from csvline in lines
+                                                   let data = csvline.Split(',')
+                                                   select new SettledBet()
+                                                   {
+                                                       Customer = Convert.ToInt32(data[0]),
+                                                       Event = Convert.ToInt32(data[1]),
+                                                       Participant = Convert.ToInt32(data[2]),
+                                                       Stake = Convert.ToInt32(data[3]),
+                                                       Win = Convert.ToInt32(data[4]),
+                                                   }).ToList();
+
+
+            dgvUnsettledBet.DataSource = listAllUnsettledData;
         }
 
         /// <summary>

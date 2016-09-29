@@ -30,7 +30,9 @@
         {
             this.dgvSettledBet = new System.Windows.Forms.DataGridView();
             this.lblSettledBet = new System.Windows.Forms.Label();
+            this.dgvUnsettledBet = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSettledBet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUnsettledBet)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvSettledBet
@@ -52,17 +54,28 @@
             this.lblSettledBet.TabIndex = 1;
             this.lblSettledBet.Text = "Customers highlighted in yellow are winning the bet at an unusual rate";
             // 
+            // dgvUnsettledBet
+            // 
+            this.dgvUnsettledBet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUnsettledBet.Location = new System.Drawing.Point(128, 282);
+            this.dgvUnsettledBet.Name = "dgvUnsettledBet";
+            this.dgvUnsettledBet.RowTemplate.Height = 24;
+            this.dgvUnsettledBet.Size = new System.Drawing.Size(863, 414);
+            this.dgvUnsettledBet.TabIndex = 2;
+            // 
             // BettingMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1087, 728);
+            this.Controls.Add(this.dgvUnsettledBet);
             this.Controls.Add(this.lblSettledBet);
             this.Controls.Add(this.dgvSettledBet);
             this.Name = "BettingMain";
             this.Text = "Betting Information";
             this.Load += new System.EventHandler(this.BettingMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSettledBet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUnsettledBet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -72,6 +85,7 @@
 
         private System.Windows.Forms.DataGridView dgvSettledBet;
         private System.Windows.Forms.Label lblSettledBet;
+        private System.Windows.Forms.DataGridView dgvUnsettledBet;
     }
 }
 
