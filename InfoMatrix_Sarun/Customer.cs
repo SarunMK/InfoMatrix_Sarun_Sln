@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,10 +15,12 @@ namespace InfoMatrix_Sarun
         /// <summary>
         /// Holds Customer Id
         /// </summary>
+        [DisplayName("Customer Id")]
         public int CustomerId { get; set; }
         /// <summary>
         /// Holds Customer Name
         /// </summary>
+        [DisplayName("Customer Name")]
         public string CustomerName { get; set; }
         /// <summary>
         /// Holds no of Wins by the customer

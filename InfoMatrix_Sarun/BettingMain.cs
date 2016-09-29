@@ -71,12 +71,20 @@ namespace InfoMatrix_Sarun
         }
 
         /// <summary>
-        /// DataBindingComplete of SettledBet grid
+        /// DataBindingComplete event of SettledBet grid
+        /// Used for formatting the grid rows and cells
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void dgvSettledBet_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgvSettledBet.ClearSelection();
+            dgvSettledBet.ReadOnly = true;
+            dgvSettledBet.Columns["IsUnusualWin"].Visible = false;
+            dgvSettledBet.Columns["WinCount"].Visible = false;
+            dgvSettledBet.Columns["TotalBetCount"].Visible = false;
+            dgvSettledBet.Columns["CustomerId"].Width = 100;
+            dgvSettledBet.Columns["CustomerName"].Width = 200;
             foreach (DataGridViewRow row in dgvSettledBet.Rows)
             {
                 //If IsUnusualWin is true, set background color
