@@ -28,21 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dgvSettledBet = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSettledBet)).BeginInit();
             this.SuspendLayout();
+            // 
+            // dgvSettledBet
+            // 
+            this.dgvSettledBet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSettledBet.Location = new System.Drawing.Point(128, 109);
+            this.dgvSettledBet.Name = "dgvSettledBet";
+            this.dgvSettledBet.RowTemplate.Height = 24;
+            this.dgvSettledBet.Size = new System.Drawing.Size(633, 150);
+            this.dgvSettledBet.TabIndex = 0;
             // 
             // BettingMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1087, 728);
+            this.Controls.Add(this.dgvSettledBet);
             this.Name = "BettingMain";
             this.Text = "Betting Information";
             this.Load += new System.EventHandler(this.BettingMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSettledBet)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dgvSettledBet;
     }
 }
 
