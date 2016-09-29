@@ -40,6 +40,9 @@
             this.lblUnusual = new System.Windows.Forms.Label();
             this.lblHighlyUnusual = new System.Windows.Forms.Label();
             this.lblBet1000 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblHeaderLogo = new System.Windows.Forms.Label();
+            this.lblWelcome = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSettledBet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUnsettledBetHighRisk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUnsettledBetUnusual)).BeginInit();
@@ -47,6 +50,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvUnsettledBet1000Plus)).BeginInit();
             this.grpSettled.SuspendLayout();
             this.grpUnsettled.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvSettledBet
@@ -108,7 +112,7 @@
             // 
             this.grpSettled.Controls.Add(this.dgvSettledBet);
             this.grpSettled.Controls.Add(this.lblSettledBet);
-            this.grpSettled.Location = new System.Drawing.Point(24, 41);
+            this.grpSettled.Location = new System.Drawing.Point(24, 120);
             this.grpSettled.Name = "grpSettled";
             this.grpSettled.Size = new System.Drawing.Size(544, 236);
             this.grpSettled.TabIndex = 6;
@@ -125,7 +129,7 @@
             this.grpUnsettled.Controls.Add(this.dgvUnsettledBetHighlyUnusual);
             this.grpUnsettled.Controls.Add(this.dgvUnsettledBetHighRisk);
             this.grpUnsettled.Controls.Add(this.dgvUnsettledBetUnusual);
-            this.grpUnsettled.Location = new System.Drawing.Point(24, 320);
+            this.grpUnsettled.Location = new System.Drawing.Point(24, 385);
             this.grpUnsettled.Name = "grpUnsettled";
             this.grpUnsettled.Size = new System.Drawing.Size(1790, 540);
             this.grpUnsettled.TabIndex = 7;
@@ -155,9 +159,9 @@
             this.lblHighlyUnusual.AutoSize = true;
             this.lblHighlyUnusual.Location = new System.Drawing.Point(897, 20);
             this.lblHighlyUnusual.Name = "lblHighlyUnusual";
-            this.lblHighlyUnusual.Size = new System.Drawing.Size(308, 17);
+            this.lblHighlyUnusual.Size = new System.Drawing.Size(277, 17);
             this.lblHighlyUnusual.TabIndex = 10;
-            this.lblHighlyUnusual.Text = "Customers with more than 30 times average bet";
+            this.lblHighlyUnusual.Text = "Stake with more than 30 times average bet";
             // 
             // lblBet1000
             // 
@@ -168,13 +172,47 @@
             this.lblBet1000.TabIndex = 11;
             this.lblBet1000.Text = "Bet more than 1000 dollars";
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel1.Controls.Add(this.lblWelcome);
+            this.panel1.Controls.Add(this.lblHeaderLogo);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(2200, 94);
+            this.panel1.TabIndex = 10;
+            // 
+            // lblHeaderLogo
+            // 
+            this.lblHeaderLogo.AutoSize = true;
+            this.lblHeaderLogo.Font = new System.Drawing.Font("Calibri", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderLogo.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.lblHeaderLogo.Location = new System.Drawing.Point(24, 27);
+            this.lblHeaderLogo.Name = "lblHeaderLogo";
+            this.lblHeaderLogo.Size = new System.Drawing.Size(117, 46);
+            this.lblHeaderLogo.TabIndex = 0;
+            this.lblHeaderLogo.Text = "R I S K";
+            // 
+            // lblWelcome
+            // 
+            this.lblWelcome.AutoSize = true;
+            this.lblWelcome.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWelcome.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.lblWelcome.Location = new System.Drawing.Point(1277, 40);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new System.Drawing.Size(123, 21);
+            this.lblWelcome.TabIndex = 1;
+            this.lblWelcome.Text = "Welcome User !";
+            // 
             // BettingMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1412, 1045);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.grpUnsettled);
             this.Controls.Add(this.grpSettled);
             this.Name = "BettingMain";
@@ -190,6 +228,8 @@
             this.grpSettled.PerformLayout();
             this.grpUnsettled.ResumeLayout(false);
             this.grpUnsettled.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -208,6 +248,9 @@
         private System.Windows.Forms.Label lblBet1000;
         private System.Windows.Forms.Label lblHighlyUnusual;
         private System.Windows.Forms.Label lblUnusual;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblWelcome;
+        private System.Windows.Forms.Label lblHeaderLogo;
     }
 }
 
