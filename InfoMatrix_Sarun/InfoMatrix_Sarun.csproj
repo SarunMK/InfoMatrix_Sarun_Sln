@@ -52,6 +52,7 @@
     <Compile Include="BettingMain.Designer.cs">
       <DependentUpon>BettingMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Combined.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

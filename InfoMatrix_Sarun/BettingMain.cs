@@ -13,6 +13,7 @@ namespace InfoMatrix_Sarun
 {
     public partial class BettingMain : Form
     {
+        List<Customer> listSettledCustomer = null;
         public BettingMain()
         {
             InitializeComponent();
@@ -48,7 +49,7 @@ namespace InfoMatrix_Sarun
 
             
             //Group all information based on customer
-            List<Customer> listSettledCustomer = (from bet in listAllSettledData
+            listSettledCustomer = (from bet in listAllSettledData
                                    group bet by bet.Customer into groupBet
                                    select new Customer
                                    {
@@ -90,7 +91,24 @@ namespace InfoMatrix_Sarun
                                                    }).ToList();
 
 
-            dgvUnsettledBet.DataSource = listAllUnsettledData;
+            List<Combined> listCombined = (from bet in listAllUnsettledData
+                                join listCustSet in listSettledCustomer
+                                on bet.Customer equals listCustSet.CustomerId
+                                select new Combined
+                                {
+                                    CustomerId = listCustSet.CustomerId,
+                                    WinCount = listCustSet.WinCount,
+                                    TotalBetCount = listCustSet.TotalBetCount,
+                                    CustomerName = listCustSet.CustomerName,
+                                    IsUnusualWin = listCustSet.IsUnusualWin,
+                                    UnsettledEvent = bet.Event,
+                                    UnsettledParticipant = bet.Participant,
+                                    UnsettledStake = bet.Stake,
+                                    UnsettledWin = bet.Win,
+                                }).ToList();
+
+
+            dgvUnsettledBet.DataSource = listCombined;
         }
 
         /// <summary>
