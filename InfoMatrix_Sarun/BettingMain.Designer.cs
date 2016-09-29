@@ -179,7 +179,7 @@
             this.panel1.Controls.Add(this.lblHeaderLogo);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2200, 94);
+            this.panel1.Size = new System.Drawing.Size(2000, 94);
             this.panel1.TabIndex = 10;
             // 
             // lblHeaderLogo
