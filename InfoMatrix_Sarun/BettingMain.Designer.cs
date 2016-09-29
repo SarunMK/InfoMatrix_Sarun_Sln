@@ -40,6 +40,7 @@
             this.dgvSettledBet.RowTemplate.Height = 24;
             this.dgvSettledBet.Size = new System.Drawing.Size(820, 150);
             this.dgvSettledBet.TabIndex = 0;
+            this.dgvSettledBet.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvSettledBet_DataBindingComplete);
             // 
             // BettingMain
             // 
